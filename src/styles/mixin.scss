@@ -1,0 +1,194 @@
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin scrollBar {
+  &::-webkit-scrollbar-track-piece {
+    background: #d3dce6;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #99a9bf;
+    border-radius: 20px;
+  }
+}
+
+@mixin relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin operateButton {
+    height: 20px;
+    font-size: 12px;
+    padding: 3px !important;
+    margin-left: 0px; // 阻止.el-button + .el-button样式
+    text-align: center;
+    color: white;
+    border: none;
+    i{font-size: 12px}
+    span{margin-left: 0px}
+    .el-icon--right{
+      margin-left: 0px
+    }
+}
+
+@mixin table{
+  .table-header{
+    padding: 5px;
+  }
+
+  .tableMain{
+    height: calc(100% - 39px);
+    //margin-right: 30px;
+    overflow-y: auto;
+    width: 100%;
+
+    // 表格中搜索栏的输入框、下拉框、日期选择框、日期区间选择框
+    .contain-search-row .el-input,.el-select,.el-date-editor--daterange,.el-date-editor--date{
+      width: 100%;
+    }
+
+    // 搜索栏按钮样式
+    .contain-search-row {
+      .el-button{
+        //padding: 5px 10px;
+        i{
+          line-height: 10px; // 解决含图标导致
+        }
+      }
+    }
+
+    .endButton{
+      @include operateButton;
+      background-color: rgb(255, 0, 0);
+    }
+    .editButton{
+      @include operateButton;
+      background-color: rgb(3, 215, 144);
+    }
+    .delButton{
+      @include operateButton;
+      background-color: rgb(206, 91, 114);
+    }
+    .sortButton{
+      @include operateButton;
+      background-color: rgb(0, 157, 255);
+    }
+
+    // 表单元素
+    .el-form-item {
+      margin-bottom: 0px !important;
+    }
+    .el-table{
+      color: #ffffff;
+      //border:  1px solid #181E36 !important;
+      th{
+        //background-color: #222b45;
+        //border:  0px solid #181E36 !important;
+        //border-bottom:  1px solid #181E36 !important;
+        height: 13px !important;
+        color: #000;
+      }
+
+      tr{
+        color: #000000;
+        //background-color: #181E36;
+        height: 13px !important;
+        td{
+          //border:  0px solid #181E36 !important;
+          //border-bottom:  1px solid #181E36 !important;
+          height: 13px !important;
+        }
+      }
+
+      // 无数据时表格背景色
+      .el-table__empty-block{
+        //background: #181E36;
+      }
+    }
+    .el-table::before{
+      //border:  1px solid #797979;
+    }
+    // 斑马格第二行样式
+    .el-table--striped .el-table__body tr.el-table__row--striped td{
+      //background-color: #222B45;
+    }
+    // 非首行鼠标悬浮行颜色
+    .el-table--enable-row-hover .el-table__body tr:hover>td {
+      background: #ECF5FF;
+    }
+    // 鼠标选中行颜色
+    .el-table__body tr.current-row > td{
+      background: #ECF5FF!important;
+    }
+    // 首行悬浮时颜色(有搜索行)
+    .contain-search-row.el-table--enable-row-hover .el-table__body tr:hover:first-child > td {
+      background-color: transparent!important;
+    }
+    // 首行选中时颜色(有搜索行)
+    .contain-search-row .el-table__body tr.current-row:first-child>td {
+      background-color: transparent!important;
+    }
+
+    .el-icon-edit:hover{
+      color: rgb(51, 102, 255);
+      transition: unset;
+      z-index: 999;
+    }
+    .el-icon-switch-button:hover,.el-icon-delete:hover{
+      color: rgb(255, 61, 113);
+    }
+
+  }
+
+  // 表尾分页
+  .table-foot{
+    width: 100%;
+    float: bottom;
+    height: 30px;
+    margin-bottom: 2px;
+    margin-top: 3px;
+    text-align: center;
+
+    /*设置xx条/页的框的颜色*/
+    .el-select .el-input.is-focus .el-input__inner,
+    .el-pagination__sizes .el-input .el-input__inner:hover,
+    .el-select .el-input__inner {
+      //background-color: #222b45;
+      //border: 1.5px solid #181E36;
+      border-radius: 3px;
+      color: #409eff;
+      :focus{
+        border-color: #18ab8f;
+      }
+    }
+    /*设置当前页码的样式，及鼠标移上其他页码时的样式,以及左右箭头鼠标移上的样式*/
+    .el-pager li.active,.el-pager li:hover,
+    .el-pagination button:hover{
+      background-color: #409eff;
+      filter:brightness(0.8); // 降低背景色饱和度
+      color: #ffffff;
+    }
+    .el-pager li,.el-pagination button {
+      //background-color: #222b45;
+      //border: 1.5px solid #181E36;
+      border-radius: 3px;
+      color: #409eff;
+    }
+
+    /* 总条数样式 */
+    .el-pagination__total{
+      //color: #409EFF;
+    }
+  }
+}

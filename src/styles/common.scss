@@ -1,0 +1,58 @@
+@import './mixin.scss';
+
+// 通用页面容器样式
+.common-table-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 160px);
+  background-color: #222b45;
+  border-radius: 5.5px;
+}
+
+.common-table-page {
+  //padding: 12px;
+  height: calc(100% - 110px);
+  // 页头定义
+  .page-header{
+    height: 39px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #f8f8fa;
+    padding-top: 3px;
+    padding-left: 5px;
+    border-bottom: 1px solid #101426;
+
+    .header-buttons{
+      display:inline-block;
+      float: right;
+      padding-right: 20px;
+
+      .el-select + .el-button{ // 下拉框和按钮间隔控制
+        margin-left: 10px;
+      }
+      .el-button + .el-select{
+        margin-left: 10px;
+      }
+    }
+  }
+
+  // 页体样式
+  .page-container {
+    width: 100%;
+    height: 100%;
+    //background: #222b45;
+
+    @include table;
+  }
+
+  // 页尾样式
+  .page-foot{
+    position: absolute;
+    bottom: 20px;
+    text-align: center;
+  }
+}
+
+.table-column-hidden .el-checkbox__input {
+  display: none
+}

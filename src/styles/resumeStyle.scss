@@ -1,0 +1,55 @@
+.device-main{
+  width: 100%;
+  height: calc(100vh - 65px);
+  display: flex;
+  .resume-view{
+    width: 260px;
+    height: 100%;
+    margin-left: 10px;
+    overflow: auto;
+    svg{
+      font-size: 20px;
+    }
+    .resumeTitle{
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+      border-radius: 0 0 16px 16px;
+      background: #0052D9;
+      position: relative;
+      color: #20a0ff;
+      fill:#20a0ff;
+      p{
+        height: 94%;
+        background: #ffffff;
+        position: absolute;
+        margin: 0 auto;
+        border-radius: 0 0 10px 10px;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      }
+    }
+    .treeStyle{
+      background: #ffffff;
+      padding-bottom: 10px;
+    }
+  }
+  .resumeInterface{
+    width: calc(100% - 260px);
+  }
+}
+//tabs
+.el-tabs__nav-scroll{
+  display: flex;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+.el-tabs__content{
+  padding: 0 20px;
+}
+.el-menu--horizontal > .el-submenu .el-submenu__title{
+  height: 50px;
+  line-height: 50px;
+}
