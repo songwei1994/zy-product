@@ -136,7 +136,7 @@ export default {
         this.$message({ type: 'success', message: '巡检名修改成功！', duration: 1500 })
       })
     },
-    // 新增巡检项
+    // 新增巡检子项
     handleAddContent() {
       const contentObj = {
         itemId: this.patrolForm.itemId,
