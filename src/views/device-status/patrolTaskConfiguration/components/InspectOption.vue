@@ -14,7 +14,7 @@
       }}</span>项</div>
       <div style="width: 100%;text-align: center;padding: 6px" @click="handleAddInspect">
         <el-button style="width: 100%;border-radius: 0;border: 1px solid #409EFF;color: #409EFF"
-          :disabled="!isAddShow">
+          :disabled="!isAddShow || !options.length">
           <i class="el-icon-plus" />
           新增巡检项
         </el-button>
@@ -154,6 +154,10 @@ export default {
     handleOptionSubmit() {
       this.$message({ type: 'info', message: '该功能未上线！' })
       // this.$refs.inspectResultList.showForm()
+    },
+    //禁用新增
+    deviceDisable(){
+      this.isAddShow = false
     }
   }
 }

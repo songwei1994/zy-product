@@ -73,9 +73,6 @@ export default {
         status: 2
       },
       tableData: [],
-      checkAll: false,
-      deviceList: [],
-      isChoseAll: false,
       id: null,
       deviceUnitList: [
         {
@@ -118,6 +115,7 @@ export default {
       this.handleNodeClick({ id: this.id })
     },
     handleNodeClick(data) {
+      this.$parent.handleDeviceSelected()
       this.id = data.id
       getDeviceByOrganization(data.id).then(response => {
         this.tableData = response.data
