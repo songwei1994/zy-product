@@ -9,13 +9,23 @@ import permission from './modules/permission'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  state() {
+    return {
+      deviceList: []
+    }
+  },
   modules: {
     app,
     settings,
     permission,
     user
   },
-  getters
+  getters,
+  mutations: {
+    setDeviceList(state,list) {
+      state.deviceList = list
+    }
+  }
 })
 
 export default store

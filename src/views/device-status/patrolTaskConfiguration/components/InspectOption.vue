@@ -13,8 +13,7 @@
       <div style="width: 100%;text-align: right;padding:10px  20px 4px 0">共<span style="color: #168FFF">{{ options.length
       }}</span>项</div>
       <div style="width: 100%;text-align: center;padding: 6px" @click="handleAddInspect">
-        <el-button style="width: 100%;border-radius: 0;border: 1px solid #409EFF;color: #409EFF"
-          :disabled="!isAddShow || !options.length">
+        <el-button style="width: 100%;border-radius: 0;border: 1px solid #409EFF;color: #409EFF" :disabled="!isAddShow">
           <i class="el-icon-plus" />
           新增巡检项
         </el-button>
@@ -40,15 +39,31 @@
         </div>
       </div>
     </div>
-
     <inspectResultList ref="inspectResultList" />
+    <el-dialog title="复制巡检项目" :visible.sync="selecteDialogVisible" width="30%" :before-close="handleClose">
+      <el-form :model="selectForm">
+        <el-form-item label="请选择要拷贝的设备" label-width="140">
+          <el-select v-model="selectForm.selectedDevice" placeholder="请选择">
+            <el-option v-for="item in selectForm.deviceList" :key="item.id" :label="item.name" :value="item.id">
+            </el-option>
+          </el-select> </el-form-item>
+        <el-form-item label="拷贝到该设备:" label-width="140">
+          <div>{{ option }}</div>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="selecteDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="copyDevice">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import inspectResultList from './InspectResultList'
 import { addItem, editItem, deleteItem } from '@/api/inspection'
-import { getConfigurationDevice } from '@/api/configuration'
+import { getConfigurationDevice, CopyDeviceItemConfig } from '@/api/configuration'
+import { deviceStore } from '@/store/index'
 export default {
   name: 'InspectOption',
   components: { inspectResultList },
@@ -57,7 +72,7 @@ export default {
       option: 'A201',
       searchInput: '',
       isEdit: false,
-      isAddShow: false,
+      isAddShow: true,
       optionSum: {
         count: 0,
         complete: 0,
@@ -65,14 +80,20 @@ export default {
       },
       options: [],
       data: [],
-      itemObj: {}
+      itemObj: {},
+      selecteDialogVisible: false,
+      selectForm:{
+        selectedDevice: '',
+        deviceList: []
+      }
     }
   },
   methods: {
     // 刷新数据
     refreshData() {
       const that = this
-      that.handleGetData(this.data)
+      // that.handleGetData(this.data)
+      this.isAddShow = true
       setTimeout(() => {
         that.options.forEach(item => {
           if (item.itemId === that.itemObj.itemId) {
@@ -83,15 +104,12 @@ export default {
     },
     // 获取任务巡检-所有点检项
     handleGetData(data) {
-      this.isAddShow = true
       this.data = data
       this.option = data.name
       getConfigurationDevice(data.id).then(response => {
         this.options = response.data
-        if (response.data.length != 0) {
-          this.handleRow(response.data[0])
-          this.optionSum.count = response.data.reduce((pre, next) => pre + next.totalContentCount, 0)
-        }
+        this.handleRow(response.data[0])
+        this.optionSum.count = response.data.reduce((pre, next) => pre + next.totalContentCount, 0)
       })
     },
     // 新增巡检项
@@ -120,6 +138,18 @@ export default {
       // this.isEdit = true
       this.$parent.changDisabledStatus(false)
     },
+    // 修改巡检项名称
+    // handleChangeEditValue(val) {
+    // const submitEditValue = {
+    //   itemId: val.itemId,
+    //   name: val.itemName
+    // }
+    // editItem(submitEditValue).then(response => {
+    //   this.isEdit = false
+    //   this.refreshData()
+    //   this.$message({ type: 'success', message: '巡检名修改成功！', duration: 1500 })
+    // })
+    // },
     // 删除巡检项
     handleDelete(data) {
       const that = this
@@ -140,24 +170,30 @@ export default {
     },
     // 通过主页面方法调用巡检编辑页面方法
     handleRow(row) {
-      // if (row != undefined) {
-      //   if (row.itemId !== undefined) {
-      //     this.refreshData()
-      //   }
-      // }
+      console.log(row);
+      if (row.itemId !== undefined) {
+        this.refreshData()
+      }
       if (this.itemObj.itemId !== row.itemId) {
         this.$parent.changDisabledStatus(true)
       }
       this.itemObj = row
       this.$parent.handleInspectResultList(row)
     },
+    //获取设备列表，选择copy设备
     handleOptionSubmit() {
-      this.$message({ type: 'info', message: '该功能未上线！' })
+      this.selectForm.deviceList = this.$store.state.deviceList
+      this.selecteDialogVisible = true
       // this.$refs.inspectResultList.showForm()
     },
-    //禁用新增
-    deviceDisable(){
-      this.isAddShow = false
+    copyDevice(){
+      CopyDeviceItemConfig(this.selectForm.selectedDevice, this.data.id).then(res => {
+        this.$message({ type: 'success', message: '导入成功' })
+        this.selecteDialogVisible = false
+      })
+    },
+    handleClose() {
+
     }
   }
 }

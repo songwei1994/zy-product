@@ -41,10 +41,6 @@ export default {
       this.$refs.inspectOption.handleGetData(data)
       this.$refs.inspectDetail.showEditStatus(true)
     },
-    //设备未选中
-    handleDeviceSelected(){
-      this.$refs.inspectOption.deviceDisable()
-    },
     handleInspectResultList(data) {
       this.$refs.inspectDetail.getInspectResultList(data)
     },

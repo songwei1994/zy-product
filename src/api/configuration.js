@@ -42,3 +42,12 @@ export function deleteItemConfig(contentId) {
     method: 'delete'
   })
 }
+
+// 复制巡检项
+export function CopyDeviceItemConfig(deviceId,toDeviceId) {
+  return request({
+    url: '/api/Inspection/Configuration/Device/' + deviceId + '/CopyTo/'+ toDeviceId + '?replace=true',
+    method: 'get'
+  })
+}
+
