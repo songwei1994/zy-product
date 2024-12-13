@@ -136,25 +136,25 @@ export let asyncRoutes = [
     ]
   },
 
-  {
-    path: '/device-status',
-    component: Layout,
-    redirect: '/device-status/unitConfiguration',
-    name: '设备状态',
-    meta: { title: '设备状态', icon: 'el-icon-postcard', permissions: ['admin', 'qcc'] },
-    // children: [
-    //   {
-    //     path: 'unitConfiguration',
-    //     component: () => import('@/views/device-status/unitConfiguration'),
-    //     meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-    //   },
-    //   {
-    //     path: 'patrolTaskConfiguration',
-    //     component: () => import('@/views/device-status/patrolTaskConfiguration'),
-    //     meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-    //   }
-    // ]
-  },
+  // {
+  //   path: '/device-status',
+  //   component: Layout,
+  //   redirect: '/device-status/unitConfiguration',
+  //   name: '设备状态',
+  //   meta: { title: '设备状态', icon: 'el-icon-postcard', permissions: ['admin', 'qcc'] },
+  //   // children: [
+  //   //   {
+  //   //     path: 'unitConfiguration',
+  //   //     component: () => import('@/views/device-status/unitConfiguration'),
+  //   //     meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
+  //   //   },
+  //   //   {
+  //   //     path: 'patrolTaskConfiguration',
+  //   //     component: () => import('@/views/device-status/patrolTaskConfiguration'),
+  //   //     meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
+  //   //   }
+  //   // ]
+  // },
   {
     path: '/accredit-manager',
     component: Layout,
@@ -162,43 +162,43 @@ export let asyncRoutes = [
     name: '配置',
     meta: { title: '配置', icon: 'accredit', permissions: ['admin', 'qcc'] },
     children: [
-      {
-        path: 'unitConfiguration',
-        component: () => import('@/views/device-status/unitConfiguration'),
-        meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-      },
+      // {
+      //   path: 'unitConfiguration',
+      //   component: () => import('@/views/device-status/unitConfiguration'),
+      //   meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
+      // },
       {
         path: 'patrolTaskConfiguration',
         component: () => import('@/views/device-status/patrolTaskConfiguration'),
         meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
       },
-      {
-        path: 'qrAccreditSupplier',
-        component: () => import('@/views/device-status/unitConfiguration'),
-        meta: { title: '设置配置', icon: 'el-icon-s-unfold', permissions: ['admin', 'qcc'] }
-      }
+      // {
+      //   path: 'qrAccreditSupplier',
+      //   component: () => import('@/views/device-status/unitConfiguration'),
+      //   meta: { title: '设置配置', icon: 'el-icon-s-unfold', permissions: ['admin', 'qcc'] }
+      // }
     ]
   },
 
-  {
-    path: '/supplier-employee-manager',
-    component: Layout,
-    redirect: '/supplier-employee-manager/supplierEmployee',
-    name: '设置',
-    meta: { title: '设置', icon: 'employee', permissions: ['admin', 'supplier'] },
-    // children: [
-    //   {
-    //     path: 'unitConfiguration',
-    //     component: () => import('@/views/device-status/unitConfiguration'),
-    //     meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-    //   },
-    //   {
-    //     path: 'patrolTaskConfiguration',
-    //     component: () => import('@/views/device-status/patrolTaskConfiguration'),
-    //     meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-    //   }
-    // ]
-  },
+  // {
+  //   path: '/supplier-employee-manager',
+  //   component: Layout,
+  //   redirect: '/supplier-employee-manager/supplierEmployee',
+  //   name: '设置',
+  //   meta: { title: '设置', icon: 'employee', permissions: ['admin', 'supplier'] },
+  //   // children: [
+  //   //   {
+  //   //     path: 'unitConfiguration',
+  //   //     component: () => import('@/views/device-status/unitConfiguration'),
+  //   //     meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
+  //   //   },
+  //   //   {
+  //   //     path: 'patrolTaskConfiguration',
+  //   //     component: () => import('@/views/device-status/patrolTaskConfiguration'),
+  //   //     meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
+  //   //   }
+  //   // ]
+  // },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

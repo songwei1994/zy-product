@@ -13,7 +13,7 @@
             @node-click="handleNodeClick"
           />
         </el-tab-pane>
-        <el-tab-pane label="配置管理" name="second">
+        <!-- <el-tab-pane label="配置管理" name="second">
           <h3 slot="label" style="margin: 10px 0px"><svg-icon icon-class="manage" />设备单位</h3>
           <el-tree
             :data="deviceUnitList"
@@ -23,7 +23,7 @@
             accordion
             @node-click="handleNodeClick"
           />
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
     <div class="inspectDeviceList">

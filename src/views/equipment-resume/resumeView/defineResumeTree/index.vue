@@ -23,10 +23,10 @@
           <span slot="label"><svg-icon icon-class="manage" />设备单位</span>
           <deviceUnit ref="deviceUnit" />
         </el-tab-pane>
-        <el-tab-pane label="配置管理" name="second">
+        <!-- <el-tab-pane label="配置管理" name="second">
           <span slot="label"><svg-icon icon-class="manage" />运维单位</span>
           <maintenanceUnit ref="maintenanceUnit" />
-        </el-tab-pane>
+        </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
