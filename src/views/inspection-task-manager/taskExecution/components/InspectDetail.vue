@@ -6,7 +6,7 @@
 
     <div class="monitorListDiv">
       <div class="monitorTitleDiv">
-        <h4>摄像头列表</h4>
+        <h4>监控列表</h4>
         <span><i class="el-icon-picture" /> &nbsp;截图</span>
       </div>
 

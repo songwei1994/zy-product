@@ -86,7 +86,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column align="center" label="情况说明" show-overflow-tooltip>
+            <el-table-column align="center" label="质量情况" show-overflow-tooltip>
               <template slot-scope="scope">
                 <div>{{ scope.row.resultDescription }}</div>
                 <!--                <div>{{ (!scope.row.description || scope.row.description === '') ? '' : scope.row.description }}</div>-->

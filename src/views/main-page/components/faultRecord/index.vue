@@ -5,7 +5,7 @@
         <i class="block" />
       </div>
       <div style="width: 100%;height: 100%; display: flex;align-items: center;justify-content: space-between; border-bottom: 1px solid #0081FF;padding-bottom: 5px;">
-        <span>故障记录</span>
+        <span>质量记录</span>
         <el-button type="text">
           查看
           <i class="el-icon-paperclip" />

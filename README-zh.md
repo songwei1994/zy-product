@@ -1,4 +1,4 @@
-# BeltConveyors-web 带式输送机智能运维系统
+# BeltConveyors-web 质量管理平台
 
 > 
 

@@ -62,7 +62,7 @@
 
       <div class="inspectDescriptionDiv">
         <el-form ref="form" :model="form" label-width="120px">
-          <el-form-item label="情况说明">
+          <el-form-item label="质量情况">
             <el-input v-model="form.inspectDescription" type="textarea" />
           </el-form-item>
         </el-form>
@@ -91,7 +91,7 @@ export default {
       isShow: false,
       loading: false,
       listLoading: false,
-      title: '巡检清单提交-A201',
+      title: '巡检质量清单提交-A201',
       list: [
         {
           optionName: '滚筒',

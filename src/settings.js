@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '带式输送机智能运维系统',
+  title: '质量管理平台',
 
   /**
    * @type {boolean} true | false

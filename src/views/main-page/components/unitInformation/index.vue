@@ -19,7 +19,7 @@
       </el-col>
     </el-col>
     <el-col type="flex" class="row-bg">
-      <el-col :span="6">设备单位:</el-col>
+      <el-col :span="6">组织架构:</el-col>
       <el-col :span="18">
         <el-input v-model="fromData.factory" size="mini" readonly />
       </el-col>
