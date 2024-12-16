@@ -14,7 +14,7 @@
           />
         </el-tab-pane>
         <!-- <el-tab-pane label="配置管理" name="second">
-          <h3 slot="label" style="margin: 10px 0px"><svg-icon icon-class="manage" />组织架构</h3>
+          <h3 slot="label" style="margin: 10px 0px"><svg-icon icon-class="manage" />设备单位</h3>
           <el-tree
             :data="deviceUnitList"
             :props="defaultProps"
