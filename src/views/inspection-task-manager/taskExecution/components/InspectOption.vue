@@ -44,7 +44,7 @@ export default {
   components: { inspectResultList },
   data() {
     return {
-      option: 'A201',
+      option: '',
       searchInput: '',
       optionSum: {
         count: 0,
@@ -54,7 +54,7 @@ export default {
       options: [],
       data: [],
       id: null,
-      clickRowObj: {}
+      clickRowObj: null
     }
   },
   methods: {
@@ -63,6 +63,10 @@ export default {
     },
     refreshChildren() {
       this.$parent.handleInspectResultList(this.clickRowObj)
+    },
+    handleReGetData(data){
+      this.clickRowObj = null
+      this.handleGetData(data)
     },
     handleGetData(data) {
       const that = this
@@ -95,7 +99,11 @@ export default {
           }
         })
         that.optionSum.exception = exceptionNum.length
-        this.handleRow(response.data[0])
+        if(this.clickRowObj != null){
+          this.handleRow(this.clickRowObj)
+        }else{
+          this.handleRow(response.data[0])
+        }
       })
     },
     handleRow(data) {

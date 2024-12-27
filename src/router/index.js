@@ -96,23 +96,23 @@ export let asyncRoutes = [
   //     }
   //   ]
   // },
-  {
-    path: '/equipment-resume',
-    component: Layout,
-    redirect: '/resumeView',
-    name: '设备履历',
-    meta: { title: '设备履历', icon: 'check', permissions: ['admin', 'qcc'] },
-    children: [
-      {
-        path: 'resumeView',
-        component: () => import('@/views/equipment-resume/resumeView'),
-        meta: { title: '履历查看', icon: 'el-icon-user', permissions: ['admin', 'qcc'] }
-      }
-    ]
-  },
+  // {
+  //   path: '/equipment-resume',
+  //   component: Layout,
+  //   redirect: '/resumeView',
+  //   name: '设备履历',
+  //   meta: { title: '设备履历', icon: 'check', permissions: ['admin', 'qcc'] },
+  //   children: [
+  //     {
+  //       path: 'resumeView',
+  //       component: () => import('@/views/equipment-resume/resumeView'),
+  //       meta: { title: '履历查看', icon: 'el-icon-user', permissions: ['admin', 'qcc'] }
+  //     }
+  //   ]
+  // },
 
   {
-    path: '/inspection-task-manager',
+    path: '/',
     component: Layout,
     redirect: '/taskExecution',
     name: '设备巡检',
@@ -155,12 +155,37 @@ export let asyncRoutes = [
   //   //   }
   //   // ]
   // },
+  // {
+  //   path: '/accredit-manager',
+  //   component: Layout,
+  //   redirect: '/accredit-manager/supplierAccount',
+  //   name: '配置',
+  //   meta: { title: '配置', icon: 'accredit', permissions: ['admin', 'qcc'] },
+  //   children: [
+  //     {
+  //       path: 'unitConfiguration',
+  //       component: () => import('@/views/device-status/unitConfiguration'),
+  //       meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
+  //     },
+  //     {
+  //       path: 'patrolTaskConfiguration',
+  //       component: () => import('@/views/device-status/patrolTaskConfiguration'),
+  //       meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
+  //     },
+  //     {
+  //       path: 'qrAccreditSupplier',
+  //       component: () => import('@/views/device-status/unitConfiguration'),
+  //       meta: { title: '设置配置', icon: 'el-icon-s-unfold', permissions: ['admin', 'qcc'] }
+  //     }
+  //   ]
+  // },
+
   {
-    path: '/accredit-manager',
+    path: '/supplier-employee-manager',
     component: Layout,
-    redirect: '/accredit-manager/supplierAccount',
-    name: '配置',
-    meta: { title: '配置', icon: 'accredit', permissions: ['admin', 'qcc'] },
+    redirect: '/supplier-employee-manager/supplierEmployee',
+    name: '设置',
+    meta: { title: '设置', icon: 'employee', permissions: ['admin', 'supplier'] },
     children: [
       // {
       //   path: 'unitConfiguration',
@@ -171,34 +196,9 @@ export let asyncRoutes = [
         path: 'patrolTaskConfiguration',
         component: () => import('@/views/device-status/patrolTaskConfiguration'),
         meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-      },
-      // {
-      //   path: 'qrAccreditSupplier',
-      //   component: () => import('@/views/device-status/unitConfiguration'),
-      //   meta: { title: '设置配置', icon: 'el-icon-s-unfold', permissions: ['admin', 'qcc'] }
-      // }
+      }
     ]
   },
-
-  // {
-  //   path: '/supplier-employee-manager',
-  //   component: Layout,
-  //   redirect: '/supplier-employee-manager/supplierEmployee',
-  //   name: '设置',
-  //   meta: { title: '设置', icon: 'employee', permissions: ['admin', 'supplier'] },
-  //   // children: [
-  //   //   {
-  //   //     path: 'unitConfiguration',
-  //   //     component: () => import('@/views/device-status/unitConfiguration'),
-  //   //     meta: { title: '运维单位配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-  //   //   },
-  //   //   {
-  //   //     path: 'patrolTaskConfiguration',
-  //   //     component: () => import('@/views/device-status/patrolTaskConfiguration'),
-  //   //     meta: { title: '巡检任务配置', icon: 'el-icon-s-fold', permissions: ['admin', 'qcc'] }
-  //   //   }
-  //   // ]
-  // },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

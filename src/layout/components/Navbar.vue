@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <div style="height: 100%;line-height: 46px;color: #ffffff;font-size: 25px;margin-left: 40px;">质量管理平台</div>
+    <div style="height: 100%;line-height: 46px;color: #ffffff;font-size: 25px;margin-left: 40px;">倾向化管理</div>
     <!-- <breadcrumb class="breadcrumb-container" />-->
 
     <div class="right-menu">

@@ -37,7 +37,7 @@ export default {
       this.$refs.inspectOption.refreshData()
     },
     handleParentGetData(data) {
-      this.$refs.inspectOption.handleGetData(data)
+      this.$refs.inspectOption.handleReGetData(data)
     },
     handleInspectResultList(data) {
       this.$refs.inspectDetail.getInspectResultList(data)

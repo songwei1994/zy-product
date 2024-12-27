@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '质量管理平台',
+  title: '倾向化管理',
 
   /**
    * @type {boolean} true | false

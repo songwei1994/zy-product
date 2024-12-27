@@ -14,7 +14,7 @@
           />
         </el-tab-pane>
         <!-- <el-tab-pane label="配置管理" name="second">
-          <h3 slot="label" style="margin: 10px 0px"><svg-icon icon-class="manage" />组织架构</h3>
+          <h3 slot="label" style="margin: 10px 0px"><svg-icon icon-class="manage" />管理架构</h3>
           <el-tree
             :data="deviceUnitList"
             :props="defaultProps"
@@ -115,10 +115,11 @@ export default {
       this.handleNodeClick({ id: this.id })
     },
     handleNodeClick(data) {
-      this.$parent.handleDeviceSelected()
+      // this.$parent.handleDeviceSelected()
       this.id = data.id
       getDeviceByOrganization(data.id).then(response => {
-        this.tableData = response.data
+        this.tableData = response.data        
+        this.$store.commit('setDeviceList', response.data);
       }).catch(error => {
         this.$message({ type: 'error', message: '获取运维单位失败，' + error })
       })

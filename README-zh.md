@@ -1,4 +1,4 @@
-# BeltConveyors-web 质量管理平台
+# BeltConveyors-web 倾向化管理
 
 > 
 

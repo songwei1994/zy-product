@@ -11,11 +11,9 @@
       <div class="inspect-device">
         <inspectDevice ref="inspectDevice" />
       </div>
-
       <div class="inspect-option">
         <inspectOption ref="inspectOption" />
       </div>
-
       <div class="inspect-detail">
         <inspectDetail ref="inspectDetail" />
       </div>

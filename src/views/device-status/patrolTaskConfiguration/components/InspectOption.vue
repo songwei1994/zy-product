@@ -40,7 +40,7 @@
       </div>
     </div>
     <inspectResultList ref="inspectResultList" />
-    <el-dialog title="复制巡检项目" :visible.sync="selecteDialogVisible" width="30%" :before-close="handleClose">
+    <el-dialog title="复制巡检项目" :visible.sync="selecteDialogVisible" width="30%">
       <el-form :model="selectForm">
         <el-form-item label="请选择要拷贝的设备" label-width="140">
           <el-select v-model="selectForm.selectedDevice" placeholder="请选择">
@@ -69,7 +69,7 @@ export default {
   components: { inspectResultList },
   data() {
     return {
-      option: 'A201',
+      option: '',
       searchInput: '',
       isEdit: false,
       isAddShow: true,
@@ -92,15 +92,15 @@ export default {
     // 刷新数据
     refreshData() {
       const that = this
-      // that.handleGetData(this.data)
+      that.handleGetData(this.data)
       this.isAddShow = true
-      setTimeout(() => {
-        that.options.forEach(item => {
-          if (item.itemId === that.itemObj.itemId) {
-            this.$parent.handleInspectResultList(item)
-          }
-        })
-      }, 100)
+      // setTimeout(() => {
+      //   that.options.forEach(item => {
+      //     if (item.itemId === that.itemObj.itemId) {
+      //       this.$parent.handleInspectResultList(item)
+      //     }
+      //   })
+      // }, 100)
     },
     // 获取任务巡检-所有点检项
     handleGetData(data) {
@@ -170,10 +170,10 @@ export default {
     },
     // 通过主页面方法调用巡检编辑页面方法
     handleRow(row) {
-      console.log(row);
-      if (row.itemId !== undefined) {
-        this.refreshData()
-      }
+      // console.log(row);
+      // if (row.itemId !== undefined) {
+      //   this.refreshData()
+      // }
       if (this.itemObj.itemId !== row.itemId) {
         this.$parent.changDisabledStatus(true)
       }
@@ -182,6 +182,7 @@ export default {
     },
     //获取设备列表，选择copy设备
     handleOptionSubmit() {
+      console.log('this.$store.state.deviceList',this.$store.state.deviceList);
       this.selectForm.deviceList = this.$store.state.deviceList
       this.selecteDialogVisible = true
       // this.$refs.inspectResultList.showForm()
@@ -190,11 +191,9 @@ export default {
       CopyDeviceItemConfig(this.selectForm.selectedDevice, this.data.id).then(res => {
         this.$message({ type: 'success', message: '导入成功' })
         this.selecteDialogVisible = false
+        this.$parent.handleRefreshData()
       })
     },
-    handleClose() {
-
-    }
   }
 }
 </script>

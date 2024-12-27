@@ -51,3 +51,19 @@ export function CopyDeviceItemConfig(deviceId,toDeviceId) {
   })
 }
 
+// 编辑巡检项基本信息
+export function putInspectionItmeInfo(itemId,data) {
+  return request({
+    url: '/api/Inspection/Configuration/Item/' + itemId + '/Info',
+    method: 'put',
+    data
+  })
+}
+// 查询巡检项基本信息
+export function getInspectionItmeInfo(itemId) {
+  return request({
+    url: '/api/Inspection/Configuration/Item/' + itemId + '/Info',
+    method: 'get'
+  })
+}
+
