@@ -32,6 +32,12 @@ export default {
   name: 'TaskExecution',
   components: { inspectDevice, inspectOption, inspectDetail, appTitle },
   methods: {
+    addImage(id,src){
+      this.$refs.inspectOption.addImage(id,src)
+    },
+    deleteImage(id){
+      this.$refs.inspectOption.deleteImage(id)
+    },
     handleRefreshData() {
       this.$refs.inspectDevice.refreshData()
       this.$refs.inspectOption.refreshData()

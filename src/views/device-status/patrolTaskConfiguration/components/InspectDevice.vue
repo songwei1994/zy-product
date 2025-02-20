@@ -141,7 +141,7 @@ export default {
 <style lang="scss" scoped>
 ::v-deep .el-table .cell{
     display: flex;
-    margin-left: 30%;
+    // margin-left: 30%;
   }
 .inspectDevice{
   height: 100%;

@@ -13,7 +13,7 @@
       <div style="width: 100%;text-align: right;padding:10px  20px 4px 0">共<span style="color: #168FFF">{{ options.length
       }}</span>项</div>
       <div style="width: 100%;text-align: center;padding: 6px" @click="handleAddInspect">
-        <el-button style="width: 100%;border-radius: 0;border: 1px solid #409EFF;color: #409EFF" :disabled="!isAddShow">
+        <el-button style="width: 100%;border-radius: 0;border: 1px solid #409EFF;color: #409EFF" v-show="isShow" :disabled="!isAddShow">
           <i class="el-icon-plus" />
           新增巡检项
         </el-button>
@@ -26,8 +26,8 @@
         <!--          </el-input>-->
         <!--        </div>-->
         <div v-if="item.isAdd" class="isInput">
-          <el-input v-model="item.itemName" @change="handleAddDivItem(item)">
-            <i slot="suffix" class="el-input_icon el-icon-circle-close" />
+          <el-input v-model="item.itemName" @change="handleAddDivItem(item)" clearable @clear="handleClear">
+            <!-- <i slot="suffix" class="el-input_icon el-icon-circle-close" /> -->
           </el-input>
         </div>
         <div v-else class="isInput">
@@ -73,6 +73,7 @@ export default {
       searchInput: '',
       isEdit: false,
       isAddShow: true,
+      isShow:false,
       optionSum: {
         count: 0,
         complete: 0,
@@ -90,7 +91,7 @@ export default {
   },
   methods: {
     // 刷新数据
-    refreshData() {
+    refreshData() {      
       const that = this
       that.handleGetData(this.data)
       this.isAddShow = true
@@ -108,7 +109,13 @@ export default {
       this.option = data.name
       getConfigurationDevice(data.id).then(response => {
         this.options = response.data
-        this.handleRow(response.data[0])
+        this.isAddShow = true
+        this.isShow = true
+        // if(this.itemObj){
+        //   this.handleRow(this.itemObj)
+        // }else{
+        //   this.handleRow(response.data[0])
+        // }
         this.optionSum.count = response.data.reduce((pre, next) => pre + next.totalContentCount, 0)
       })
     },
@@ -125,6 +132,9 @@ export default {
       }
     },
     handleAddDivItem(data) {
+      if(data.itemName === ''){
+        return
+      }
       const itemObj = {
         itemName: data.itemName,
         deviceId: this.data.id
@@ -134,7 +144,7 @@ export default {
       })
     },
     // 点击编辑
-    handleEdit() {
+    handleEdit() {      
       // this.isEdit = true
       this.$parent.changDisabledStatus(false)
     },
@@ -168,11 +178,19 @@ export default {
         }
       })
     },
+    handleClear(){
+      // this.isAddShow = true
+    },
     // 通过主页面方法调用巡检编辑页面方法
     handleRow(row) {
-      // console.log(row);
+      // if(this.isShow){
+      //   return
+      // }
       // if (row.itemId !== undefined) {
       //   this.refreshData()
+      // }
+      // if(this.isEdit){
+      //   return
       // }
       if (this.itemObj.itemId !== row.itemId) {
         this.$parent.changDisabledStatus(true)
@@ -248,14 +266,17 @@ export default {
 
       .isInput {
         flex: 4;
-
+        margin-right: 4px;
         ::v-deep .el-input__inner {
           height: 30px;
           line-height: 30px;
         }
+        ::v-deep .el-input__clear{
+          line-height: 30px;
+        }
 
         ::v-deep .el-input_icon {
-          line-height: 30px;
+          // line-height: 30px;
         }
       }
 

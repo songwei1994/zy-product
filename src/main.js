@@ -6,12 +6,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import '@/styles/index.scss' // global css
-
+import moment from 'moment'
 import App from './App'
 import store from './store'
 import router from './router'
 import guid from 'guid'
-
+Vue.prototype.$moment = moment
 import '@/icons' // icon
 import '@/permission' // permission control
 import permission from '@/directive/permission/index.js'

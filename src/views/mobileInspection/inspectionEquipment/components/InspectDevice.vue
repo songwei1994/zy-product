@@ -33,12 +33,12 @@
         placeholder="搜索"
         prefix-icon="el-icon-search"
       />
-      <h4 style="margin: 5px; width: 70px;display: inline-block;padding-top: 10px">当日状态</h4>
+      <!-- <h4 style="margin: 5px; width: 70px;display: inline-block;padding-top: 10px">当日状态</h4>
       <el-select v-model="deviceSearchForm.status" placeholder="请选择当日状态" style="width: calc(100% - 80px);display: inline-block">
         <el-option label="全部" :value="0" />
         <el-option label="已巡检" :value="1" />
         <el-option label="未巡检" :value="2" />
-      </el-select>
+      </el-select> -->
 
       <el-table
         :data="tableData"
@@ -50,20 +50,19 @@
         <el-table-column
           label="设备名称"
           align="center"
-          width="100"
         >
           <template slot-scope="scope">
             <span style="color: #0052D9">{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           align="center"
           label="上次巡检日期"
         >
           <template slot-scope="scope">
             <span style="color: #0052D9">{{ scope.row.date }}</span>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </div>
   </div>

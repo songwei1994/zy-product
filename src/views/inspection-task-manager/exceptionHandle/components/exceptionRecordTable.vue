@@ -45,7 +45,7 @@
 
       <div class="rightButton">
         <el-button size="mini" type="primary" @click="handleSearch">查询</el-button>
-        <el-button size="mini">导出</el-button>
+        <!-- <el-button size="mini">导出</el-button> -->
       </div>
     </div>
 

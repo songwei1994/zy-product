@@ -106,6 +106,12 @@ export default {
         }
       })
     },
+    addImage(imageId, imageUrl){
+      this.clickRowObj.imageList.push({ imageId:imageId, imageUrl:imageUrl })
+    },
+    deleteImage(imageId){
+      this.clickRowObj.imageList = this.clickRowObj.imageList.filter(item => item.imageId !== imageId)
+    },
     handleRow(data) {
       this.clickRowObj = data
       this.$parent.handleInspectResultList(data)

@@ -19,19 +19,20 @@
       <div class="resultContainerDiv">
         <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px">
           <el-form-item label="名称" label-width="120">
-            <el-input size="small" :maxlength="12" :disabled="isEdit" v-model="formInline.displayName" placeholder="请输入" clearable
-              label-position="right" style="width:140px"/>
+            <el-input size="small" :maxlength="12" :disabled="isEdit" v-model="formInline.displayName" placeholder="请输入"
+              clearable label-position="right" style="width:140px" />
           </el-form-item>
           <el-form-item label="规格" :maxlength="12" label-width="120">
             <el-input size="small" :disabled="isEdit" v-model="formInline.specification" placeholder="请输入" clearable
-              label-position="right" style="width:140px"/>
+              label-position="right" style="width:140px" />
           </el-form-item>
           <el-form-item label="品牌" :maxlength="12" label-width="120">
             <el-input size="small" :disabled="isEdit" v-model="formInline.brand" placeholder="请输入" clearable
-              label-position="right" style="width:140px"/>
+              label-position="right" style="width:140px" />
           </el-form-item>
           <el-form-item label="上线日期" :maxlength="12" label-width="120">
-            <el-date-picker size="small" style="width:140px" :disabled="isEdit" v-model="formInline.onlineDate" type="date" placeholder="请选择" clearable />
+            <el-date-picker size="small" style="width:140px" :disabled="isEdit" v-model="formInline.onlineDate"
+              type="date" placeholder="请选择" clearable />
           </el-form-item>
         </el-form>
       </div>
@@ -63,7 +64,7 @@
 </template>
 
 <script>
-import { getValueType, addItemConfig, editItemConfig, deleteItemConfig,putInspectionItmeInfo,getInspectionItmeInfo } from '@/api/configuration'
+import { getValueType, addItemConfig, editItemConfig, deleteItemConfig, putInspectionItmeInfo, getInspectionItmeInfo } from '@/api/configuration'
 import { editItem } from '@/api/inspection'
 export default {
   name: 'InspectDetail',
@@ -121,9 +122,11 @@ export default {
       this.isEdit = status
     },
     getInspectResultList(data) {
-      getInspectionItmeInfo(data.itemId).then(res=>{
-        this.formInline = res.data
-      })
+      if (data.itemId) {
+        getInspectionItmeInfo(data.itemId).then(res => {
+          this.formInline = res.data
+        })
+      }      
       this.list = data.contentList
       this.itemId = data.itemId
       this.patrolForm = {
@@ -131,10 +134,10 @@ export default {
         itemId: data.itemId
       }
     },
-    saveInfo(){      
-      putInspectionItmeInfo(this.itemId,this.formInline).then(res=>{
-        console.log('res',res.data);
-        
+    saveInfo() {
+      putInspectionItmeInfo(this.itemId, this.formInline).then(res => {
+        console.log('res', res.data);
+
       })
     },
     handleEditItem() {
@@ -145,7 +148,7 @@ export default {
       }
       editItem(submitEditValue).then(response => {
         this.isEdit = true
-        // this.$parent.handleRefreshData()
+        this.$parent.handleRefreshData()
         this.$message({ type: 'success', message: '巡检内容修改成功！', duration: 1500 })
       })
     },
@@ -174,6 +177,7 @@ export default {
     },
     // 删除
     handleDelete(val) {
+      this.list = this.list.filter(item => item !== val)
       deleteItemConfig(val.contentId).then(response => {
         this.$message({ type: 'success', message: '删除成功！' })
         this.$parent.handleRefreshData()

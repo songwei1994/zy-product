@@ -26,7 +26,7 @@ export default {
 <style scoped lang="scss">
   ::v-deep .el-table .cell{
     display: flex;
-    margin-left: 20%;
+    // margin-left: 20%;
   }
 .userStyle{
   line-height: 50px;

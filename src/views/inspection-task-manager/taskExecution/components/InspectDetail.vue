@@ -6,25 +6,22 @@
 
     <div class="monitorListDiv">
       <div class="monitorTitleDiv">
-        <h4>基本信息</h4>
+        <h3>基本信息</h3>
         <!-- <span><i class="el-icon-picture" /> &nbsp;截图</span> -->
       </div>
 
       <div class="monitorContainerDiv">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="120px" style="margin-left: 20px;">
-          <el-form-item label="名称" label-width="120">
-            <el-text >{{ formInline.displayName }}</el-text>
-          </el-form-item>
-          <el-form-item label="规格" label-width="120">
-            <el-text >{{ formInline.specification }}</el-text>
-          </el-form-item>
-          <el-form-item label="品牌" label-width="120">
-            <el-text >{{ formInline.brand }}</el-text>
-          </el-form-item>
-          <el-form-item label="上线日期" label-width="120">
-            <el-text >{{ formInline.onlineDate }}</el-text>
-          </el-form-item>
-        </el-form>
+        <div >
+          <el-descriptions title="" :column="2">
+            <el-descriptions-item label="名称"><span class="info-content">{{ formInline.displayName }}</span> </el-descriptions-item>
+            <el-descriptions-item label="规格"><span class="info-content">{{ formInline.specification }}</span></el-descriptions-item>
+            <el-descriptions-item label="品牌"><span class="info-content">{{ formInline.brand }}</span></el-descriptions-item>
+            <el-descriptions-item label="上线日期"><span class="info-content">{{ formInline.onlineDate }}</span>
+            </el-descriptions-item>
+          </el-descriptions>
+        </div>
+
+
         <!-- <div class="monitorButtonsDiv">
           <el-button
             v-for="item in monitorList"
@@ -42,7 +39,7 @@
 
     <div class="inspectResultDiv">
       <div class="resultTitleDiv">
-        <h4>巡检结果</h4>
+        <h3>巡检结果</h3>
       </div>
 
       <div class="resultContainerDiv">
@@ -73,7 +70,7 @@
           <el-upload size="mini" :multiple="true" :show-file-list="true" :auto-upload="true"
             accept="image/png,image/jpg,image/jpeg"
             :action="actionUrl + 'api/Inspection/Operation/Item/' + itemId + '/Image'" list-type="picture-card"
-            :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :file-list="imageList">
+            :on-preview="handlePictureCardPreview" :on-remove="handleRemove" :file-list="imageList" :on-success="handleSuccess">
             <i class="el-icon-plus" />
           </el-upload>
         </el-row>
@@ -85,8 +82,6 @@
 <script>
 import { OperationItem, deleteImages } from '@/api/inspection'
 import { getInspectionItmeInfo } from '@/api/configuration'
-
-
 export default {
   name: 'InspectDetail',
   data() {
@@ -137,8 +132,9 @@ export default {
       this.contentId = data.contentId
     },
     getInspectResultList(data) {
-      getInspectionItmeInfo(data.itemId).then(res=>{
+      getInspectionItmeInfo(data.itemId).then(res => {
         this.formInline = res.data
+        this.formInline.onlineDate = this.formInline.onlineDate ? this.formInline.onlineDate.split('T')[0] : ''
       })
       this.inspectResultList = data.contentList
       this.imageList = data.imageList.map(item => {
@@ -147,6 +143,8 @@ export default {
           url: this.actionUrl + item.imageUrl
         }
       })
+      console.log('itemId',data.itemId);
+      
       this.itemId = data.itemId
     },
     handleChoseMonitor(obj) {
@@ -185,24 +183,45 @@ export default {
         this.$message({ type: 'success', message: '描述已修改！' })
       })
     },
+    handleSuccess(file) {
+      this.$parent.addImage(file.imageId, file.imageUrl)
+    },
     handleRemove(file, fileList) {
-      deleteImages({ itemId: this.itemId, imageId: file.imageId }).then(response => {
-        this.$parent.handleRefreshData()
+      console.log('file',file);
+      var imageId = null
+      if(file.response){
+        imageId = file.response.imageId
+      }else{
+        imageId = file.imageId
+      }
+      deleteImages({ itemId: this.itemId, imageId: imageId }).then(response => {
+        this.$parent.deleteImage(imageId)
         this.$message({ type: 'success', message: '图片已删除！' })
       })
     },
     handlePictureCardPreview(file) {
+      console.log('file',file);
+      
       this.dialogImageUrl = file.url
       this.dialogVisible = true
     }
   }
 }
 </script>
-
+<style lang="scss">
+// .el-descriptions-item__label {
+//   font-size: 16px;
+// }
+.has-colon{
+  font-size: 18px !important;
+  font-weight: 600;
+}
+</style>
 <style lang="scss" scoped>
-:deep(.el-form-item){
+:deep(.el-form-item) {
   margin-left: 20px;
 }
+
 .imgs {
   display: flex;
 
@@ -239,16 +258,19 @@ export default {
 
   .monitorListDiv {
     margin: 15px 20px;
-    height: calc(50% - 155px);
+    // height: calc(50% - 240px);
+    height: 140px;
     background: white;
     border-radius: 10px;
-    overflow: auto;
+    // overflow: auto;
 
     .monitorTitleDiv {
-      line-height: 40px;
+      // line-height: 40px;
       height: 40px;
-      padding: 0px 10px;
+      // padding: 0px 10px;
+      margin-left: 16px;
       display: flex;
+      // margin-top: 12px;
       flex-direction: row;
 
       h4 {
@@ -275,7 +297,9 @@ export default {
       display: flex;
       flex-direction: row;
       height: calc(100% - 40px);
-
+      width: 96%;
+      margin-left: 12px;
+      margin-top: 12px;
       .monitorButtonsDiv {
         flex: 1;
         max-width: 250px;
@@ -313,10 +337,9 @@ export default {
 
   .inspectResultDiv {
     margin: 15px 20px;
-    height: calc(50% + 55px);
+    height: calc(100% - 260px);
     background: white;
     border-radius: 10px;
-    overflow: auto;
 
     .resultTitleDiv {
       line-height: 40px;
@@ -362,5 +385,8 @@ export default {
       .inspectImages {}
     }
   }
+}
+.info-content{
+  font-size: 16px;
 }
 </style>
