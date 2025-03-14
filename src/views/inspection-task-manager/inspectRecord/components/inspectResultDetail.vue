@@ -119,8 +119,8 @@ export default {
       isShow: false,
       loading: false,
       title: '巡检处理结果-A201',
-      inspectUser: '周方',
-      dealUser: '周方',
+      inspectUser: '张良',
+      dealUser: '王亮',
       handleDescription: '',
       exceptionDevices: [],
       exceptionDealForm: {

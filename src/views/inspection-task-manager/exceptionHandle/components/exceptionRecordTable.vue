@@ -6,13 +6,13 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="巡检人员:" label-width="100px">
-                <el-input v-model="searchPageParamFrom.inspectUser" placeholder="请输入" style="width: 90%" />
+                <el-input v-model="searchPageParamFrom.inspectUser" clearable placeholder="请输入" style="width: 90%" />
               </el-form-item>
             </el-col>
 
             <el-col :span="8">
               <el-form-item label="报送人员:" label-width="100px">
-                <el-input v-model="searchPageParamFrom.reportUser" placeholder="请输入" style="width: 90%" />
+                <el-input v-model="searchPageParamFrom.reportUser" clearable placeholder="请输入" style="width: 90%" />
               </el-form-item>
             </el-col>
 
@@ -102,7 +102,7 @@
             </el-table-column>
           </el-table>
         </div>
-        <div v-show="page.total > page.size" class="table-foot">
+        <div  class="table-foot">
           <el-pagination
             background
             layout="total,prev, pager, next ,sizes"
@@ -182,22 +182,36 @@ export default {
     },
     fetchData() {
       this.listLoading = true
+      let inspector = '张良'
+      let checker = '王亮'
       const searchParams = {
         pageSize: this.page.size,
         currentPage: this.page.no,
-        inspector: this.searchPageParamFrom.inspector,
+        inspector: this.searchPageParamFrom.inspectUser,
         deviceList: this.ids,
         statusResult: '异常',
         startTime: this.searchPageParamFrom.startDate === null ? null : this.searchPageParamFrom.startDate[0],
         endTime: this.searchPageParamFrom.startDate === null ? null : this.searchPageParamFrom.startDate[1],
         handletype: 1
       }
-
-      ResultList(searchParams).then(response => {
+      let allow_quest = true
+      if (!inspector.includes(this.searchPageParamFrom.inspectUser)) {
+        allow_quest = false
+      }
+      if (!checker.includes(this.searchPageParamFrom.reportUser)) {
+        allow_quest = false
+      }
+      if (allow_quest) {
+        ResultList(searchParams).then(response => {
+          this.listLoading = false
+          this.list = response.data.tableData
+          this.page.total = response.data.count
+        })
+      }else{
         this.listLoading = false
-        this.list = response.data.tableData
-        this.page.total = response.data.count
-      })
+        this.list = []
+        this.page.total = 0
+      }
     },
     handleSearch() {
       this.fetchData()
@@ -215,6 +229,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .el-table{
+  overflow-y: auto;
+}
   .exceptionRecordTable{
     width: 100%;
     padding: 0 20px;

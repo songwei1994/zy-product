@@ -38,7 +38,7 @@
       </div>
 
       <div class="checkboxList">
-        <el-row v-for="item in deviceList" :key="item.id" style="margin: 5px 0px">
+        <el-row v-for="item in filteredList" :key="item.id" style="margin: 5px 0px">
           <el-checkbox v-model="checkedData" :label="item.name" @change="handleCheckedChange">{{ item.name }}</el-checkbox>
         </el-row>
       </div>
@@ -100,6 +100,13 @@ export default {
               }]
         }]
 
+    }
+  },
+  computed: {
+    filteredList() {
+      return this.deviceList.filter(item => {
+        return item.name.toLowerCase().includes(this.deviceSearchForm.searchInput.toLowerCase());
+      });
     }
   },
   created() {

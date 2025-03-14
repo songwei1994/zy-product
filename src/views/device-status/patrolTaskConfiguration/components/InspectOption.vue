@@ -6,7 +6,7 @@
     </div>
 
     <div class="searchDiv">
-      <el-input v-model="searchInput" placeholder="搜索" prefix-icon="el-icon-search" />
+      <el-input v-model="searchInput" placeholder="搜索" prefix-icon="el-icon-search" clearable/>
     </div>
 
     <div class="optionListDiv">
@@ -18,7 +18,7 @@
           新增巡检项
         </el-button>
       </div>
-      <div v-for="item in options" :key="item.itemId" class="option" :class="{ 'rowBg': itemObj.itemId === item.itemId }"
+      <div v-for="item in filteredList" :key="item.itemId" class="option" :class="{ 'rowBg': itemObj.itemId === item.itemId }"
         @click="handleRow(item)">
         <!--        <div v-if="isEdit" class="isInput">-->
         <!--          <el-input v-model="item.itemName">-->
@@ -87,6 +87,13 @@ export default {
         selectedDevice: '',
         deviceList: []
       }
+    }
+  },
+  computed: {
+    filteredList() {
+      return this.options.filter(item => {
+        return item.itemName.toLowerCase().includes(this.searchInput.toLowerCase());
+      });
     }
   },
   methods: {

@@ -15,7 +15,7 @@
 
     <div class="optionListDiv">
       <div
-        v-for="(item, index) in options"
+        v-for="(item, index) in filteredList"
         :key="item.id"
         class="option"
         :class="{'rowBg':clickRowObj.itemId === item.itemId }"
@@ -55,6 +55,13 @@ export default {
       data: [],
       id: null,
       clickRowObj: null
+    }
+  },
+  computed: {
+    filteredList() {
+      return this.options.filter(item => {
+        return item.itemName.toLowerCase().includes(this.searchInput.toLowerCase());
+      });
     }
   },
   methods: {

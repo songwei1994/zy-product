@@ -6,19 +6,22 @@
           <el-row>
             <el-col :span="8">
               <el-form-item label="巡检人员:" label-width="100px">
-                <el-input v-model="searchPageParamFrom.inspector" placeholder="请输入" style="width: 90%" />
+                <el-input v-model="searchPageParamFrom.inspector" clearable placeholder="请输入" style="width: 90%" />
               </el-form-item>
             </el-col>
 
             <el-col :span="8">
               <el-form-item label="报送人员:" label-width="100px">
-                <el-input v-model="searchPageParamFrom.checker" placeholder="请输入" style="width: 90%" />
+                <el-input v-model="searchPageParamFrom.checker" clearable placeholder="请输入" style="width: 90%" />
               </el-form-item>
             </el-col>
 
             <el-col :span="8">
               <el-form-item label="状态:" label-width="100px">
-                <el-input v-model="searchPageParamFrom.statusResult" placeholder="请输入" style="width: 90%" />
+                <el-select v-model="searchPageParamFrom.handletype" placeholder="请选择">
+                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                </el-select>
+                <!-- <el-input v-model="searchPageParamFrom.statusResult" placeholder="请输入" style="width: 90%" /> -->
               </el-form-item>
             </el-col>
           </el-row>
@@ -26,18 +29,9 @@
           <el-row>
             <el-col :span="12">
               <el-form-item label="起始时间:" label-width="100px" label-position="center">
-                <el-date-picker
-                  v-model="searchPageParamFrom.startDate"
-                  type="datetimerange"
-                  align="right"
-                  unlink-panels
-                  range-separator="至"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
-                  style="width: 90%"
-                  value-format="yyyy-MM-dd HH:mm:ss"
-                  :picker-options="pickerOptions"
-                />
+                <el-date-picker v-model="searchPageParamFrom.startDate" type="datetimerange" align="right" unlink-panels
+                  range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" style="width: 90%"
+                  value-format="yyyy-MM-dd HH:mm:ss" :picker-options="pickerOptions" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -54,19 +48,9 @@
     <div class="common-table-page">
       <div class="page-container">
         <div class="tableMain">
-          <el-table
-            v-loading="listLoading"
-            stripe
-            class="contain-search-row"
-            element-loading-text="加载中..."
-            :data="list"
-            :row-style="{ height: '30px' }"
-            :cell-style="{ padding: '5px' }"
-            empty-text="没有数据"
-            fit
-            highlight-current-row
-            show-header
-          >
+          <el-table v-loading="listLoading" stripe class="contain-search-row" element-loading-text="加载中..." :data="list"
+            :row-style="{ height: '30px' }" :cell-style="{ padding: '5px' }" empty-text="没有数据" fit highlight-current-row
+            show-header>
             <el-table-column align="center" label="巡检时间" width="150" show-overflow-tooltip>
               <template slot-scope="scope">
                 <div>{{ scope.row.inspectionTimeLocalStr }}</div>
@@ -107,7 +91,7 @@
 
             <el-table-column align="center" label="状态" show-overflow-tooltip>
               <template slot-scope="scope">
-                <div>{{ scope.row.handled===true? '已处理' :'未处理' }}</div>
+                <div>{{ scope.row.handled === true ? '已处理' : '未处理' }}</div>
                 <!--                <div>-->
                 <!--                  <span v-show="scope.row.inspectResult === 0">-</span>-->
                 <!--                  <span v-show="scope.row.inspectResult === 1" :style=" scope.row.status === 0? {color: '#FA8C16'}:{ color: '#56C08D' }">{{ scope.row.status === 0? '未处理' : '已处理' }}</span>-->
@@ -117,22 +101,16 @@
 
             <el-table-column align="center" label="操作" min-width="100px">
               <template slot-scope="scope">
-                <el-link type="primary" style="line-height: 20px;border-bottom: 1px solid" @click="handleViewInspectResult(scope.row.resultId)">查看</el-link>
+                <el-link type="primary" style="line-height: 20px;border-bottom: 1px solid"
+                  @click="handleViewInspectResult(scope.row.resultId)">查看</el-link>
               </template>
             </el-table-column>
           </el-table>
         </div>
         <div v-show="page.total > page.size" class="table-foot">
-          <el-pagination
-            background
-            layout="total,prev, pager, next ,sizes"
-            :current-page.sync="page.no"
-            :page-sizes="[10, 15, 20]"
-            :page-size="page.size"
-            :total="page.total"
-            @size-change="handleSizeChange"
-            @current-change="fetchData"
-          />
+          <el-pagination background layout="total,prev, pager, next ,sizes" :current-page.sync="page.no"
+            :page-sizes="[10, 15, 20]" :page-size="page.size" :total="page.total" @size-change="handleSizeChange"
+            @current-change="fetchData" />
         </div>
       </div>
     </div>
@@ -153,13 +131,24 @@ export default {
         inspector: '',
         checker: '',
         statusResult: '',
-        startDate: ''
+        startDate: '',
+        handletype: 0
       },
       page: { // 表格分页参数
         size: 20,
         no: 1,
         total: 0
       },
+      options: [{
+        value: 0,
+        label: '全部'
+      }, {
+        value: 1,
+        label: '未处理'
+      }, {
+        value: 2,
+        label: '已处理'
+      }],
       list: [],
       ids: [],
       listLoading: false,
@@ -203,21 +192,38 @@ export default {
     },
     fetchData() {
       this.listLoading = true
+      let inspector = '张良'
+      let checker = '王亮'
       const searchParams = {
         pageSize: this.page.size,
         currentPage: this.page.no,
         inspector: this.searchPageParamFrom.inspector,
         deviceList: this.ids,
+        checker: this.searchPageParamFrom.checker,
         statusResult: '',
         startTime: this.searchPageParamFrom.startDate === null ? null : this.searchPageParamFrom.startDate[0],
         endTime: this.searchPageParamFrom.startDate === null ? null : this.searchPageParamFrom.startDate[1],
-        handletype: 0
+        handletype: this.searchPageParamFrom.handletype
       }
-      ResultList(searchParams).then(response => {
+      let allow_quest = true
+      if (!inspector.includes(this.searchPageParamFrom.inspector)) {
+        allow_quest = false
+      }
+      if (!checker.includes(this.searchPageParamFrom.checker)) {
+        allow_quest = false
+      }
+      if (allow_quest) {
+        ResultList(searchParams).then(response => {
+          this.listLoading = false
+          this.list = response.data.tableData
+          this.page.total = response.data.count
+        })
+      }else{
         this.listLoading = false
-        this.list = response.data.tableData
-        this.page.total = response.data.count
-      })
+        this.list = []
+        this.page.total = 0
+      }
+
     },
     handleSearch() {
       this.fetchData()
@@ -235,87 +241,94 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .el-dialog{
+::v-deep .el-table {
+  overflow-y: auto;
+}
+
+::v-deep .el-dialog {
   width: 50%;
   height: 80%;
-    .el-dialog__body{
+
+  .el-dialog__body {
     width: 100%;
     height: 95%;
   }
 }
-  .inspectRecordTable{
+
+.inspectRecordTable {
+  width: 100%;
+  padding: 0 20px;
+  background: #E9E9E9;
+  border-radius: 3px 3px;
+  height: calc(100% - 5px);
+
+  .selectInput {
     width: 100%;
-    padding: 0 20px;
-    background: #E9E9E9;
-    border-radius: 3px 3px;
-    height: calc(100% - 5px);
+    height: 110px;
+    display: flex;
+    justify-content: space-between;
 
-    .selectInput{
-      width: 100%;
-      height: 110px;
-      display: flex;
-      justify-content: space-between;
-
-      .searchForm{
-        flex: 3;
-        display: flex;
-        flex-direction: column;
-        align-content: center;
-        justify-content: space-around;
-
-        .el-row{
-          height: 50px;
-          padding: 5px 0px;
-        }
-
-        .el-form-item{
-          margin-bottom: 0px;
-
-          label{
-            background: rgba(255, 255, 255, 0.65)!important;
-          }
-        }
-
-      }
-
-      .rightButton{
-        max-width: 90px;
-        flex: 1;
-        height: 100px;
-        margin: 5px 0px;
-
-        .el-button{
-          width: 90px;
-          height: 38px;
-          margin: 6px 0px;
-        }
-
-        .el-button--mini{
-          padding: 12px 15px;
-        }
-        .el-button + .el-button{
-          width: 100%;
-          margin-left: auto;
-        }
-      }
-    }
-
-    .tableMain{
+    .searchForm {
+      flex: 3;
       display: flex;
       flex-direction: column;
+      align-content: center;
+      justify-content: space-around;
+
+      .el-row {
+        height: 50px;
+        padding: 5px 0px;
+      }
+
+      .el-form-item {
+        margin-bottom: 0px;
+
+        label {
+          background: rgba(255, 255, 255, 0.65) !important;
+        }
+      }
+
+    }
+
+    .rightButton {
+      max-width: 90px;
+      flex: 1;
+      height: 100px;
+      margin: 5px 0px;
+
+      .el-button {
+        width: 90px;
+        height: 38px;
+        margin: 6px 0px;
+      }
+
+      .el-button--mini {
+        padding: 12px 15px;
+      }
+
+      .el-button+.el-button {
+        width: 100%;
+        margin-left: auto;
+      }
     }
   }
+
+  .tableMain {
+    display: flex;
+    flex-direction: column;
+  }
+}
 </style>
 
 <style lang="scss">
-  .inspectRecordTable .selectInput .el-form-item__label{
-    background: rgba(255, 255, 255, 0.65)!important;
-    border-width: 1px 0px 1px 1px;
-    height: 40px;
-    border-style: solid;
-    border-color: #DCDCDC;
-    border-radius: 3px 0px 0px 3px;
-    text-align: center;
-    padding-right: 0px;
-  }
+.inspectRecordTable .selectInput .el-form-item__label {
+  background: rgba(255, 255, 255, 0.65) !important;
+  border-width: 1px 0px 1px 1px;
+  height: 40px;
+  border-style: solid;
+  border-color: #DCDCDC;
+  border-radius: 3px 0px 0px 3px;
+  text-align: center;
+  padding-right: 0px;
+}
 </style>

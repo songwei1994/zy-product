@@ -41,7 +41,7 @@
       </el-select> -->
 
       <el-table
-        :data="tableData"
+        :data="filteredList"
         size="mini"
         style="width: 100%; margin-top: 5px"
         :header-cell-style="{ backgroundColor: 'rgba(0,129,255,0.27)', padding: '2px' }"
@@ -122,6 +122,13 @@ export default {
                   }]
               }]
         }]
+    }
+  },
+  computed: {
+    filteredList() {
+      return this.tableData.filter(item => {
+        return item.name.toLowerCase().includes(this.deviceSearchForm.searchInput.toLowerCase());
+      });
     }
   },
   created() {

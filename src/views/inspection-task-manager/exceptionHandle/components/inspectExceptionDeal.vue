@@ -109,7 +109,7 @@ export default {
       loading: false,
       title: '',
       inspector: '',
-      handler: '',
+      handler: '王亮',
       handlerId: '',
       exceptionDevices: [],
       exceptionDealForm: {
@@ -132,7 +132,7 @@ export default {
         // 巡检人
         this.inspector = response.data.inspector
         // 处理人
-        this.handler = response.data.handler
+        this.handler = '王亮'
         this.handlerId = response.data.handlerId
         // 处理说明
         this.handleDescription = response.data.handleDescription
@@ -169,6 +169,12 @@ export default {
     submitForm() {
       const formData = new FormData()
       var files = this.$refs.upload.uploadFiles
+      console.log('files',this.exceptionDealForm.handleDescription)
+      if(this.exceptionDealForm.handleDescription === ''){
+        this.exceptionDealForm.handleDescription = '无'
+        // this.$message({ type: 'warning', message: '请填写处理说明!' })
+        // return
+      }
       formData.append('HandleInfo', this.exceptionDealForm.handleDescription)
       formData.append('Handler', '1')
       formData.append('HandlerId', '1')
